@@ -1,43 +1,406 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بيتك تريم | Beitak Tarim</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
-            background-color: #f9f9f9;
-            color: #333;
-            text-align: right;
+            padding: 0;
         }
-        h1 {
-            color: #111;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #065f46;
+            color: #ffffff;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        }
+        .header-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        .brand h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+        .brand p {
+            font-size: 0.85rem;
+            color: #a7f3d0;
+        }
+        .lang-btn {
+            background-color: #047857;
+            color: #ffffff;
+            border: 1px solid #34d399;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .lang-btn:active {
+            background-color: #064e3b;
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 16px 40px;
+        }
+        .filter-section-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+        .filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .filter-btn {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .filter-btn.active {
+            background-color: #065f46;
+            color: #ffffff;
+            border-color: #065f46;
+        }
+        .section-title {
+            font-size: 1.15rem;
+            margin-top: 8px;
+            margin-bottom: 14px;
+            color: #0f172a;
         }
         .property-card {
-            background: #fff;
-            padding: 15px;
-            margin-bottom: 15px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+        }
+        .badge-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .badge-sale {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        .badge-rent {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .location-tag {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #0f172a;
+        }
+        .price-specs {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+        .card-desc {
+            font-size: 0.92rem;
+            color: #475569;
+            margin-bottom: 16px;
+        }
+        .wa-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #16a34a;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 11px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 0.95rem;
+        }
+        .wa-btn:active {
+            background-color: #15803d;
+        }
+        .empty-state {
+            display: none;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 28px 18px;
+            text-align: center;
+            border: 1px dashed #cbd5e1;
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
 
-    <h1>بيتك تريم | Beitak Tarim</h1>
-    <p>دليل العقارات الأول في تريم وضواحيها</p>
+    <header>
+        <div class="header-container">
+            <div class="brand">
+                <h1 id="brandTitle">بيتك تريم | Beitak Tarim</h1>
+                <p id="brandSubtitle">دليل العقارات الأول في تريم وضواحيها</p>
+            </div>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langToggle">English</button>
+        </div>
+    </header>
 
-    <h2>العقارات المتاحة (2)</h2>
+    <main>
+        <!-- Type Filters -->
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterProperties('all', this)" id="filterAll">الكل (2)</button>
+            <button class="filter-btn" onclick="filterProperties('sale', this)" id="filterSale">للبيع</button>
+            <button class="filter-btn" onclick="filterProperties('rent', this)" id="filterRent">للإيجار</button>
+        </div>
 
-    <div class="property-card">
-        <h3>للبيع 📍 عدييد</h3>
-        <p><strong>مبنى سني متكامل مع مساحة توسعة في عدييد</strong></p>
-        <p>324 متر مربع • 350,000 SAR</p>
-        <p>عقار بمساحة 324 متر مربع في عدييد محاط بسور حجري مسلح. يضم شقتين مكتملتين...</p>
-    </div>
+        <!-- Core Tarim Neighborhoods -->
+        <div class="filter-section-label" id="neighborhoodLabel">أحياء مدينة تريم:</div>
+        <div class="filters">
+            <button class="filter-btn" onclick="filterProperties('aideed', this)" id="filterAideed">عيديد / عدييد</button>
+            <button class="filter-btn" onclick="filterProperties('albudoor', this)" id="filterAlbudoor">البدور</button>
+            <button class="filter-btn" onclick="filterProperties('alkhairat', this)" id="filterAlkhairat">الخيرات</button>
+            <button class="filter-btn" onclick="filterProperties('rahbah', this)" id="filterRahbah">الرحبة</button>
+            <button class="filter-btn" onclick="filterProperties('dammun', this)" id="filterDammun">دمون</button>
+            <button class="filter-btn" onclick="filterProperties('suhail', this)" id="filterSuhail">السحيل</button>
+            <button class="filter-btn" onclick="filterProperties('khaif', this)" id="filterKhaif">الخليف</button>
+            <button class="filter-btn" onclick="filterProperties('sooq', this)" id="filterSooq">السوق</button>
+            <button class="filter-btn" onclick="filterProperties('hawi', this)" id="filterHawi">الحاوي وقدر الله</button>
+            <button class="filter-btn" onclick="filterProperties('nowaidira', this)" id="filterNowaidira">النويدرة</button>
+            <button class="filter-btn" onclick="filterProperties('muhaidharah', this)" id="filterMuhaidharah">المحيضرة وحصن عوض</button>
+        </div>
+
+        <h2 class="section-title" id="listingsHeading">العقارات المتاحة</h2>
+
+        <!-- Empty State Message -->
+        <div class="empty-state" id="emptyState">
+            <p id="emptyText">لا توجد عقارات مدرجة في هذا الحي حالياً. تواصل معنا لإضافة عقارك أو الاستفسار.</p>
+        </div>
+
+        <!-- Property 1: Sale in Aideed (+967 739 918 807) -->
+        <div class="property-card" data-category="sale aideed">
+            <div class="badge-row">
+                <span class="badge badge-sale" id="p1Badge">للبيع</span>
+                <span class="location-tag" id="p1Loc">📍 عدييد، تريم</span>
+            </div>
+            <h3 class="card-title" id="p1Title">مبنى سكني متكامل مع مساحة توسعة في عدييد</h3>
+            <p class="price-specs" id="p1Specs">324 متر مربع • 350,000 ريال سعودي</p>
+            <p class="card-desc" id="p1Desc">
+                عقار بمساحة 324 متر مربع في منطقة عدييد محاط بسور حجري مسلح. يضم شقتين مكتملتين (كل شقة 3 غرف، حمامين، ومطبخ) بالإضافة إلى نصف ثانٍ قيد الإنشاء جاهز للتوسعة.
+            </p>
+            <a href="https://wa.me/967739918807?text=السلام%20عليكم،%20أستفسر%20عن%20العقار%20المعروض%20للبيع%20في%20عدييد%20(324%20متر)" target="_blank" class="wa-btn" id="p1Btn">
+                💬 تواصل عبر واتساب
+            </a>
+        </div>
+
+        <!-- Property 2: Apartment for Rent (+967 735 811 863) -->
+        <div class="property-card" data-category="rent">
+            <div class="badge-row">
+                <span class="badge badge-rent" id="p2Badge">للإيجار</span>
+                <span class="location-tag" id="p2Loc">📍 تريم، حضرموت</span>
+            </div>
+            <h3 class="card-title" id="p2Title">شقة سكنية جاهزة للإيجار في تريم</h3>
+            <p class="price-specs" id="p2Specs">سكن عائلي • موقع هادئ ومميز</p>
+            <p class="card-desc" id="p2Desc">
+                شقة سكنية نظيفة ومكتملة الخدمات متاحة للإيجار الشهري أو السنوي في تريم. مناسبة للعائلات وتتميز بقربها من الخدمات الأساسية.
+            </p>
+            <a href="https://wa.me/967735811863?text=السلام%20عليكم،%20أستفسر%20عن%20الشقة%20المعروضة%20للإيجار%20في%20تريم" target="_blank" class="wa-btn" id="p2Btn">
+                💬 تواصل عبر واتساب
+            </a>
+        </div>
+
+        <footer id="footerText">
+            © 2026 بيتك تريم (Beitak Tarim) - جميع الحقوق محفوظة
+        </footer>
+    </main>
+
+    <script>
+        let currentLang = 'ar';
+
+        const content = {
+            ar: {
+                dir: 'rtl',
+                toggle: 'English',
+                subtitle: 'دليل العقارات الأول في تريم وضواحيها',
+                filterAll: 'الكل (2)',
+                filterSale: 'للبيع',
+                filterRent: 'للإيجار',
+                neighborhoodLabel: 'أحياء مدينة تريم:',
+                filterAideed: 'عيديد / عدييد',
+                filterAlbudoor: 'البدور',
+                filterAlkhairat: 'الخيرات',
+                filterRahbah: 'الرحبة',
+                filterDammun: 'دمون',
+                filterSuhail: 'السحيل',
+                filterKhaif: 'الخليف',
+                filterSooq: 'السوق',
+                filterHawi: 'الحاوي وقدر الله',
+                filterNowaidira: 'النويدرة',
+                filterMuhaidharah: 'المحيضرة وحصن عوض',
+                heading: 'العقارات المتاحة',
+                emptyText: 'لا توجد عقارات مدرجة في هذا الحي حالياً. تواصل معنا لإضافة عقارك أو الاستفسار.',
+                p1Badge: 'للبيع',
+                p1Loc: '📍 عدييد، تريم',
+                p1Title: 'مبنى سكني متكامل مع مساحة توسعة في عدييد',
+                p1Specs: '324 متر مربع • 350,000 ريال سعودي',
+                p1Desc: 'عقار بمساحة 324 متر مربع في منطقة عدييد محاط بسور حجري مسلح. يضم شقتين مكتملتين (كل شقة 3 غرف، حمامين، ومطبخ) بالإضافة إلى نصف ثانٍ قيد الإنشاء جاهز للتوسعة.',
+                p1Btn: '💬 تواصل عبر واتساب',
+                p2Badge: 'للإيجار',
+                p2Loc: '📍 تريم، حضرموت',
+                p2Title: 'شقة سكنية جاهزة للإيجار في تريم',
+                p2Specs: 'سكن عائلي • موقع هادئ ومميز',
+                p2Desc: 'شقة سكنية نظيفة ومكتملة الخدمات متاحة للإيجار الشهري أو السنوي في تريم. مناسبة للعائلات وتتميز بقربها من الخدمات الأساسية.',
+                p2Btn: '💬 تواصل عبر واتساب',
+                footer: '© 2026 بيتك تريم (Beitak Tarim) - جميع الحقوق محفوظة'
+            },
+            en: {
+                dir: 'ltr',
+                toggle: 'العربية',
+                subtitle: 'The Premier Real Estate Directory in Tarim & Suburbs',
+                filterAll: 'All (2)',
+                filterSale: 'For Sale',
+                filterRent: 'For Rent',
+                neighborhoodLabel: 'Tarim City Neighborhoods:',
+                filterAideed: 'Aideed',
+                filterAlbudoor: 'Albudoor',
+                filterAlkhairat: 'Al-Khairat',
+                filterRahbah: 'Al-Rahbah',
+                filterDammun: 'Dammun',
+                filterSuhail: 'Al-Suhail',
+                filterKhaif: 'Al-Khaif',
+                filterSooq: 'Al-Sooq',
+                filterHawi: 'Al-Hawi & Qadr Allah',
+                filterNowaidira: 'Al-Nowaidira',
+                filterMuhaidharah: 'Al-Muhaidharah & Hosn Awad',
+                heading: 'Available Properties',
+                emptyText: 'No properties listed in this neighborhood yet. Contact us to list your property or inquire.',
+                p1Badge: 'For Sale',
+                p1Loc: '📍 Aideed, Tarim',
+                p1Title: 'Residential Building with Expansion Space in Aideed',
+                p1Specs: '324 sq. meters • 350,000 SAR',
+                p1Desc: '324 sqm residential property in Aideed enclosed by a reinforced stone wall. Features two completed apartments (3 rooms, 2 bathrooms, and a kitchen each) plus a partially constructed second half.',
+                p1Btn: '💬 Inquire via WhatsApp',
+                p2Badge: 'For Rent',
+                p2Loc: '📍 Tarim, Hadhramaut',
+                p2Title: 'Ready-to-Move Residential Apartment in Tarim',
+                p2Specs: 'Family Housing • Quiet Location',
+                p2Desc: 'Clean, fully serviced residential apartment available for monthly or annual rent in Tarim. Ideal for families and conveniently close to local amenities.',
+                p2Btn: '💬 Inquire via WhatsApp',
+                footer: '© 2026 Beitak Tarim - All Rights Reserved'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const data = content[currentLang];
+            const htmlRoot = document.getElementById('htmlRoot');
+
+            htmlRoot.setAttribute('lang', currentLang);
+            htmlRoot.setAttribute('dir', data.dir);
+
+            document.getElementById('langToggle').textContent = data.toggle;
+            document.getElementById('brandSubtitle').textContent = data.subtitle;
+            document.getElementById('filterAll').textContent = data.filterAll;
+            document.getElementById('filterSale').textContent = data.filterSale;
+            document.getElementById('filterRent').textContent = data.filterRent;
+            document.getElementById('neighborhoodLabel').textContent = data.neighborhoodLabel;
+            document.getElementById('filterAideed').textContent = data.filterAideed;
+            document.getElementById('filterAlbudoor').textContent = data.filterAlbudoor;
+            document.getElementById('filterAlkhairat').textContent = data.filterAlkhairat;
+            document.getElementById('filterRahbah').textContent = data.filterRahbah;
+            document.getElementById('filterDammun').textContent = data.filterDammun;
+            document.getElementById('filterSuhail').textContent = data.filterSuhail;
+            document.getElementById('filterKhaif').textContent = data.filterKhaif;
+            document.getElementById('filterSooq').textContent = data.filterSooq;
+            document.getElementById('filterHawi').textContent = data.filterHawi;
+            document.getElementById('filterNowaidira').textContent = data.filterNowaidira;
+            document.getElementById('filterMuhaidharah').textContent = data.filterMuhaidharah;
+            document.getElementById('listingsHeading').textContent = data.heading;
+            document.getElementById('emptyText').textContent = data.emptyText;
+
+            document.getElementById('p1Badge').textContent = data.p1Badge;
+            document.getElementById('p1Loc').textContent = data.p1Loc;
+            document.getElementById('p1Title').textContent = data.p1Title;
+            document.getElementById('p1Specs').textContent = data.p1Specs;
+            document.getElementById('p1Desc').textContent = data.p1Desc;
+            document.getElementById('p1Btn').textContent = data.p1Btn;
+
+            document.getElementById('p2Badge').textContent = data.p2Badge;
+            document.getElementById('p2Loc').textContent = data.p2Loc;
+            document.getElementById('p2Title').textContent = data.p2Title;
+            document.getElementById('p2Specs').textContent = data.p2Specs;
+            document.getElementById('p2Desc').textContent = data.p2Desc;
+            document.getElementById('p2Btn').textContent = data.p2Btn;
+
+            document.getElementById('footerText').textContent = data.footer;
+        }
+
+        function filterProperties(category, btnElement) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const cards = document.querySelectorAll('.property-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category').includes(category)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('emptyState').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    </script>
 
 </body>
 </html>
