@@ -1,0 +1,11 @@
+{
+  "name": "Beitak Tarim | بيتك تريم",
+  "short_name": "Beitak Tarim",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f8",
+  "theme_color": "#0f766e",
+  "dir": "rtl",
+  "lang": "ar"
+}
